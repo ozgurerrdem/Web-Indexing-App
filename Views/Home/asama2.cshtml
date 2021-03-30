@@ -1,0 +1,46 @@
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    Layout = "_Layout";
+}
+
+@model yazlab.webui.Models.Asama2
+
+<div class="form-group mt-3">
+    <form action="/home/asama2" class="input-group mb-3 input-group-sm ">
+        <input type="text" name="url" class="form-control py-3" placeholder="Url giriniz..">
+        <button type="submit" class="btn btn-primary px-5">Ara</button>
+    </form>
+</div>
+@if(ViewBag.kontrol != false)
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Kelime</th>
+            <th scope="col">Frekans</th>
+            </tr>
+        </thead>
+        <tbody>      
+            @for (int i = 0; i < Model.text.Count; i++)
+            {
+                <tr>
+                    <th scope="row">@(i+1)</th>
+                    <td>@Model.text[i].Item1</td>
+                    <td>@Model.text[i].Item2.ToString()</td>
+                </tr>
+                @if(i==4)break;
+            }          
+        </tbody>
+    </table>
+}
+else if(ViewBag.kontrol == false)
+{
+    <h1>Hatalı url girdiniz!</h1>
+    <br>
+    <h3>hata: @ViewBag.hata</h3>
+}

@@ -1,0 +1,80 @@
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    Layout = "_Layout";
+}
+
+@model yazlab.webui.Models.Asama5
+<div class="form-group mt-3">
+    <form action="/home/asama5" class="input-group mb-3 input-group-sm ">
+        <input type="text" name="url" class="form-control py-3" placeholder="Url giriniz..">
+        <button type="submit" class="btn btn-primary px-5">Ara</button>
+    </form>
+</div>
+@if(ViewBag.kontrol != false)
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Kelime</th>
+            <th scope="col">Frekans</th>
+            </tr>
+        </thead>
+        <tbody>      
+            @for (int i = 0; i < Model.text.Count; i++)
+            {
+                <tr>
+                    <th scope="row">@(i+1)</th>
+                    <td>@Model.text[i].Item1</td>
+                    <td>@Model.text[i].Item2.ToString()</td>
+                </tr>
+                @if(i==4)break;
+            }          
+        </tbody>
+    </table>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Kelime</th>
+            <th scope="col">Eş Anlamlısı</th>
+            </tr>
+        </thead>
+        <tbody>      
+            @for (int i = 0; i <@Model.text.Count; i++)
+            {
+                <tr>
+                    <th scope="row" rowspan="4">@(ViewBag.index[i]+1)</th>
+                    <td rowspan="4">@Model.text[ViewBag.index[i]].Item1</td>
+                    @for (int j = i*3; j < Model.esanlamlilar.Count; j++)
+                    {
+                        <tr>
+                            <td >@Model.esanlamlilar[j]</td>
+                        </tr>
+                        @if(j==i*3+2) break;
+                    }
+                </tr>
+                @if(i==4)break;
+            }          
+        </tbody>
+    </table>    
+    @for (int i = 0; i < @ViewBag.index.Length; i++)
+    {
+        if(i!=@ViewBag.index[i])
+        {
+            <h3 style="text-align: center;">@(i+1). Kelimenin Eşanlamlısı Bulunamadı</h3>
+        }
+        if(i==4)break;
+    }
+    <h6 style="text-align: center;">!eğer bir kelimenin eş anlamlısı bulunamazsa sıradaki kelimenin eş anlamlısı gösterilir!</h6>
+}
+else if(ViewBag.kontrol == false)
+{
+    <h1>Hatalı url girdiniz!</h1>
+    <br>
+    <h3>hata: @ViewBag.hata</h3>
+}

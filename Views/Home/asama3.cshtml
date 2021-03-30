@@ -1,0 +1,77 @@
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    Layout = "_Layout";
+}
+
+@model yazlab.webui.Models.Asama3
+
+<div class="form-group mt-3">
+    <form action="/home/asama3" class="input-group mb-3 input-group-sm ">
+        <input type="text" name="url1" class="form-control py-3" placeholder="1. Url'yi giriniz..">
+        <input type="text" name="url2" class="form-control py-3" placeholder="2. Url'yi giriniz..">
+        <button type="submit" class="btn btn-primary px-5">Ara</button>
+    </form>
+</div>
+
+@if(ViewBag.kontrol != false)
+{
+    <div class="row">
+        <div class="col">
+            <h6 style="max-width: 100%;"><a href="@ViewBag.url1">@ViewBag.url1</a></h6>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Kelime</th>
+                    <th scope="col">Frekans</th>
+                    </tr>
+                </thead>
+                <tbody>      
+                    @for (int i = 0; i < Model.text1.Count; i++)
+                    {
+                        <tr>
+                            <th scope="row">@(i+1)</th>
+                            <td>@Model.text1[i].Item1</td>
+                            <td>@Model.text1[i].Item2.ToString()</td>
+                        </tr>
+                        @if(i==4)break;
+                    }          
+                </tbody>
+            </table>    
+        </div>
+        <div class="col">
+            <h6 style="max-width: 100%;"><a href="@ViewBag.url2">@ViewBag.url2</a></h6>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Kelime</th>
+                    <th scope="col">Frekans</th>
+                    </tr>
+                </thead>
+                <tbody>      
+                    @for (int i = 0; i < Model.text2.Count; i++)
+                    {
+                        <tr>
+                            <th scope="row">@(i+1)</th>
+                            <td>@Model.text2[i].Item1</td>
+                            <td>@Model.text2[i].Item2.ToString()</td>
+                        </tr>
+                        @if(i==4)break;
+                    }          
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h1 style="text-align: center;">İki site arasındaki benzerlik skoru= %@Model.benzerlikSkoru.ToString()</h1>
+}
+else if(ViewBag.kontrol == false)
+{
+    <h1>Hatalı url girdiniz!</h1>
+    <br>
+    <h3>hata: @ViewBag.hata</h3>
+}

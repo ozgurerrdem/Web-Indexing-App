@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\ozden\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\ozden\\.nuget\\packages"
+    ]
+  }
+}
